@@ -1,0 +1,166 @@
+# ============================================================
+# Payment Orchestration System Configuration
+# ============================================================
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: payment-orchestration-system
+
+  # ---- PostgreSQL Configuration ----
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_orchestration_system
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    open-in-view: false
+
+  # ---- Redis Configuration ----
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 5000
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 4
+
+  # ---- Jackson Configuration ----
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+    time-zone: UTC
+
+# ---- OpenAPI / Swagger Configuration ----
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+
+# ---- Application Custom Configuration ----
+app:
+  security:
+    api-key-header: X-API-Key
+    hmac-header: X-HMAC-Signature
+    # Pre-configured API key for testing (in production, stored encrypted in DB)
+    master-api-key: pgw_live_sk_yuno_2026_assessment_key
+
+  idempotency:
+    ttl-hours: 24
+    key-header: Idempotency-Key
+
+  routing:
+    default-timeout-ms: 5000
+    max-retries: 3
+    retry-initial-interval-ms: 500
+    retry-multiplier: 2.0
+    retry-max-interval-ms: 4000
+
+  providers:
+    provider-a:
+      name: "CardPay Global"
+      code: PROVIDER_A
+      base-url: "https://simulated-provider-a.yuno.test/api"
+      timeout-ms: 3000
+      success-rate: 0.85
+      min-latency-ms: 50
+      max-latency-ms: 300
+    provider-b:
+      name: "UPI Direct Connect"
+      code: PROVIDER_B
+      base-url: "https://simulated-provider-b.yuno.test/api"
+      timeout-ms: 2000
+      success-rate: 0.90
+      min-latency-ms: 30
+      max-latency-ms: 200
+
+  approval-rate:
+    threshold-percentage: 60.0
+    evaluation-window-minutes: 60
+    auto-disable-on-low-rate: true
+
+  compliance:
+    audit-retention-days: 90
+    mask-card-digits: true
+    show-last-digits: 4
+
+# ---- Resilience4j Configuration ----
+resilience4j:
+  circuitbreaker:
+    instances:
+      providerA:
+        registerHealthIndicator: true
+        slidingWindowSize: 20
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+      providerB:
+        registerHealthIndicator: true
+        slidingWindowSize: 20
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+
+  retry:
+    instances:
+      paymentRetry:
+        maxAttempts: 3
+        waitDuration: 500ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        retryExceptions:
+          - java.net.ConnectException
+          - java.net.SocketTimeoutException
+          - com.yuno.gateway.exception.ProviderUnavailableException
+        ignoreExceptions:
+          - com.yuno.gateway.exception.PaymentDeclinedException
+
+# ---- Actuator ----
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,circuitbreakers
+  health:
+    circuitbreakers:
+      enabled: true
+
+# ---- Logging ----
+logging:
+  level:
+    com.yuno.gateway: DEBUG
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{traceId}] %logger{36} - %msg%n"

@@ -1,0 +1,520 @@
+// Global Styles — High-Fidelity Yuno Insights Theme
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --accent-blue: #3b52f6;
+  --accent-green: #cbe850;
+  --border-color: #f1f5f9;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.01);
+  --shadow-glow: 0 10px 30px -5px rgba(59, 82, 246, 0.03), 0 5px 15px -3px rgba(0, 0, 0, 0.01);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: var(--accent-blue); text-decoration: none; }
+
+// Slim Page Layout
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 72px;
+  background: #ffffff;
+  border-right: 1px solid #eef2f6;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+
+  .logo {
+    width: 42px;
+    height: 42px;
+    background: #3b52f6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 20px;
+    margin-bottom: 32px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(59, 82, 246, 0.2);
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .nav-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 1.8;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    &:hover {
+      background: #f8fafc;
+      color: #3b52f6;
+    }
+
+    &.active {
+      background: #eff6ff;
+      color: #3b52f6;
+      font-weight: 600;
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: -14px;
+        top: 14px;
+        width: 4px;
+        height: 16px;
+        background: #3b52f6;
+        border-radius: 4px 0 0 4px;
+      }
+    }
+  }
+}
+
+.main-wrapper {
+  flex: 1;
+  margin-left: 72px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+// Top Bar Header
+.top-header {
+  height: 64px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 1px solid #eef2f6;
+  
+  .header-left {
+    h2 { font-size: 14px; font-weight: 500; color: #555a6e; }
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+// Main Page Content Area
+.main-content {
+  padding: 40px 48px;
+  background: #fafbfc;
+  flex: 1;
+  min-height: calc(100vh - 64px);
+}
+
+// Tabs
+.tabs-bar {
+  display: flex;
+  gap: 32px;
+  border-bottom: 1px solid #eef2f6;
+  margin-bottom: 24px;
+  padding-bottom: 2px;
+}
+
+.tab-item {
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  padding-bottom: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+
+  &:hover { color: #0f172a; }
+
+  &.active {
+    color: #0f172a;
+    font-weight: 600;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #3b52f6;
+    }
+  }
+}
+
+// Filters Row
+.filters-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  
+  .filters-left {
+    display: flex;
+    gap: 12px;
+  }
+
+  .filters-right {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.pill-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+
+  &:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+  }
+
+  svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+}
+
+// Cards
+.card {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s;
+
+  &:hover {
+    box-shadow: var(--shadow-glow);
+    border-color: #e2e8f0;
+  }
+}
+
+// Text KPI Layout
+.kpi-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
+  .kpi-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid #eef2f6;
+    &:last-child { border-bottom: none; }
+  }
+
+  .kpi-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .kpi-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+}
+
+// Status Badges
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &.success { background: #ecfdf5; color: #10b981; }
+  &.failed { background: #fef2f2; color: #ef4444; }
+  &.processing { background: #eff6ff; color: #3b52f6; }
+  &.retry { background: #fffbeb; color: #f59e0b; }
+  &.healthy { background: #ecfdf5; color: #10b981; }
+  &.degraded { background: #fffbeb; color: #f59e0b; }
+  &.down { background: #fef2f2; color: #ef4444; }
+}
+
+// Data Tables
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th {
+    text-align: left;
+    padding: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid #eef2f6;
+    background: #fcfdfe;
+  }
+  
+  th:first-child { border-top-left-radius: var(--radius-sm); }
+  th:last-child { border-top-right-radius: var(--radius-sm); }
+
+  td {
+    padding: 16px;
+    font-size: 13.5px;
+    border-bottom: 1px solid #eef2f6;
+    color: #334155;
+    font-weight: 500;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+}
+
+// Toggle Switch
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+  
+  input { opacity: 0; width: 0; height: 0; }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: .3s;
+    border-radius: 22px;
+
+    &::before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+  }
+
+  input:checked + .slider {
+    background-color: #cbe850;
+  }
+
+  input:checked + .slider::before {
+    transform: translateX(22px);
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+// High-Fidelity Yuno Styled Buttons
+.btn {
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  outline: none;
+}
+
+.btn-primary {
+  background: #3b52f6;
+  color: #ffffff;
+  border-color: #3b52f6;
+  box-shadow: 0 4px 14px rgba(59, 82, 246, 0.18);
+
+  &:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    transform: translateY(-1.5px);
+    box-shadow: 0 6px 20px rgba(59, 82, 246, 0.24);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: #cbd5e1;
+    border-color: #cbd5e1;
+    color: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.btn-outline {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+
+  &:hover {
+    border-color: #3b52f6;
+    color: #3b52f6;
+    background: #eff6ff;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-danger {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #ef4444;
+
+  &:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #dc2626;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+  box-shadow: none;
+
+  &:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+  }
+}
+
+// Global High-Fidelity Yuno Styled Inputs & Form Controls
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+  width: 100%;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 12px 16px !important;
+  border-radius: 10px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+
+  &::placeholder {
+    color: #94a3b8;
+  }
+
+  &:focus {
+    border-color: #3b52f6 !important;
+    box-shadow: 0 0 0 4px rgba(59, 82, 246, 0.1) !important;
+    background: #ffffff !important;
+  }
+
+  &:disabled {
+    background: #f1f5f9 !important;
+    color: #64748b !important;
+    cursor: not-allowed !important;
+  }
+}
+
+

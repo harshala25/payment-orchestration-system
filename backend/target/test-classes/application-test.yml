@@ -1,0 +1,51 @@
+# Test profile configuration
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  data:
+    redis:
+      host: localhost
+      port: 6370
+
+app:
+  security:
+    api-key-header: X-API-Key
+    master-api-key: test-api-key
+
+  idempotency:
+    ttl-hours: 1
+
+  routing:
+    max-retries: 3
+    retry-initial-interval-ms: 100
+    retry-multiplier: 1.5
+    retry-max-interval-ms: 500
+
+  providers:
+    provider-a:
+      success-rate: 0.85
+      min-latency-ms: 10
+      max-latency-ms: 50
+    provider-b:
+      success-rate: 0.90
+      min-latency-ms: 10
+      max-latency-ms: 50
+
+  approval-rate:
+    threshold-percentage: 60.0
+    evaluation-window-minutes: 60
+    auto-disable-on-low-rate: false
+
+  compliance:
+    audit-retention-days: 30
