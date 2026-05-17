@@ -113,5 +113,3 @@ For deep-dive evaluations, look at the detailed documentation in the `docs` dire
 1.  **[API Reference](file:///docs/API-DOCUMENTATION.md)**: Exhaustive endpoint payloads, authorization structure, schema designs, and quick curl payloads.
 2.  **[System Architecture Design](file:///docs/ARCHITECTURE.md)**: Detailed entity-relationship models, schema designs, thread-safe transactional management, and performance considerations.
 3.  **[Test Cases Specification](file:///docs/TEST-CASES.md)**: Categorized lists of test suites including Sanity, Regression, Integration, and negative paths with detailed descriptions.
-4.  **[AI Prompts / Vibe Coding](file:///docs/PROMPTS.md)**: Log of instructions, engineering feedback, and development prompts executed with AI assistance.
-5.  **[Interview Prep Guide](file:///docs/INTERVIEW-QUESTIONS.md)**: Architectural and full-stack questions designed around this system to support oral evaluation prep.
