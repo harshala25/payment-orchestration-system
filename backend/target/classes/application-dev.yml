@@ -1,0 +1,65 @@
+# =============================================
+# DEV Profile — Runs WITHOUT PostgreSQL or Redis
+# Uses H2 in-memory DB + mock Redis
+# =============================================
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:payment_gateway;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  # Disable Redis auto-config if not available
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+server:
+  port: 8080
+
+app:
+  security:
+    api-key-header: X-API-Key
+    master-api-key: pgw_live_sk_yuno_2026_assessment_key
+
+  idempotency:
+    ttl-hours: 24
+
+  routing:
+    max-retries: 3
+
+  providers:
+    provider-a:
+      success-rate: 0.85
+      min-latency-ms: 50
+      max-latency-ms: 300
+    provider-b:
+      success-rate: 0.90
+      min-latency-ms: 30
+      max-latency-ms: 200
+
+  approval-rate:
+    threshold-percentage: 60.0
+    evaluation-window-minutes: 60
+    auto-disable-on-low-rate: true
