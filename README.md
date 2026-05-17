@@ -12,7 +12,7 @@
 *   **Failover & Resilient Retries**: Automatically handle soft failures, retry payments with exponential backoff, and transparently fall back to healthier gateways.
 *   **Double-Tier Idempotency**: Bulletproof transaction protection using Redis TTL caching followed by PostgreSQL unique lock constraints.
 *   **PCI-DSS & Security Best Practices**: Mask sensitive PAN data (always storing last 4 digits only, CVV never persistent) and secure requests with API key filters and HSTS headers.
-*   **Enterprise Dashboard**: A beautiful, real-time Angular interface aggregating volume, approval rates, decline distributions, and gateway performance.
+*   **Enterprise Dashboard**: A real-time Angular interface aggregating volume, approval rates, decline distributions, and gateway performance.
 
 ---
 
